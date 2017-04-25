@@ -165,6 +165,9 @@ void GroupRects(FaceRects *pFaces, FaceRectsBuf *pFacesBuf, int min_neighbors)
             pFaces->faces[c].neighbors = (short)(pFacesBuf->faces[i].neighbors);
             pFaces->faces[c].angle = (short)(pFacesBuf->faces[i].angle);
             pFaces->count++;
+
+            cout<<"pfaces.x:"<<pFaces->faces[c].x<<endl;
+
         }
     }
 }
@@ -184,8 +187,6 @@ void *LoadMBLBPCascade(const char *filename)
     MBLBPCascade *pCascade = (MBLBPCascade *)malloc(sizeof(MBLBPCascade));
     memset(pCascade, 0, sizeof(MBLBPCascade));
 
-    cout << "READING FILE" << endl;
-
     const char *version = doc.FirstChildElement("opencv_storage")->FirstChildElement("cascade")->FirstChildElement("version")->GetText();
     pCascade->win_width = atoi(doc.FirstChildElement("opencv_storage")->FirstChildElement("cascade")->FirstChildElement("width")->GetText());
     pCascade->win_height = atoi(doc.FirstChildElement("opencv_storage")->FirstChildElement("cascade")->FirstChildElement("height")->GetText());
@@ -195,9 +196,6 @@ void *LoadMBLBPCascade(const char *filename)
     cout << "pCascade Win Width : " << pCascade->win_width << endl;
     cout << "pCascade Win Height : " << pCascade->win_height << endl;
     cout << "pCascade Count : " << pCascade->count << endl;
-    pCascade->win_height = 40;
-    pCascade->win_width = 80;
-    pCascade->count = 2;
     pCascade->stages = (MBLBPStage *)malloc(sizeof(MBLBPStage) * pCascade->count);
     memset(pCascade->stages, 0, sizeof(MBLBPStage) * pCascade->count);
     tinyxml2::XMLElement *root = doc.FirstChildElement("opencv_storage")->FirstChildElement("cascade")->FirstChildElement("stages");
@@ -206,71 +204,34 @@ void *LoadMBLBPCascade(const char *filename)
     {
         pCascade->stages[tmp_i].count = atoi(stage->FirstChildElement("maxWeakCount")->GetText());
         pCascade->stages[tmp_i].threshold = atoi(stage->FirstChildElement("stageThreshold")->GetText());
+        cout<<"Threshold: "<< pCascade->stages[tmp_i].threshold << endl;
         pCascade->stages[tmp_i].weak_classifiers = (MBLBPWeak *)malloc(sizeof(MBLBPWeak) * pCascade->stages[tmp_i].count);
         memset(pCascade->stages[tmp_i].weak_classifiers, 0, sizeof(MBLBPWeak) * pCascade->stages[tmp_i].count);
         int tmp_j = 0;
-        for (tinyxml2::XMLElement *weak_classifier = stage->FirstChildElement("weakClassifiers")->FirstChildElement("_"); weak_classifier != NULL; weak_classifier = weak_classifier->NextSiblingElement("_"))
+        for (tinyxml2::XMLElement *weak_classifier = stage->FirstChildElement("weakClassifiers")->FirstChildElement("_"); weak_classifier != NULL;weak_classifier = weak_classifier->NextSiblingElement("_"))
         {
             MBLBPWeak *pWeak = pCascade->stages[tmp_i].weak_classifiers + tmp_j;
             string s = weak_classifier->FirstChildElement("rect")->GetText();
             vector<string> v = split(s, " ");
-            pWeak->x = atoi(v[0].c_str());
-            pWeak->y = atoi(v[1].c_str());
-            pWeak->cellwidth = atoi(v[2].c_str());
-            pWeak->cellheight = atoi(v[3].c_str());
+            pWeak->x = atoi(v[1].c_str());
+            pWeak->y = atoi(v[2].c_str());
+            pWeak->cellwidth = atoi(v[3].c_str());
+            pWeak->cellheight = atoi(v[4].c_str());
             pWeak->soft_threshold = atoi(weak_classifier->FirstChildElement("weakThreshold")->GetText());
-            string look_up_table_string = weak_classifier->FirstChildElement("lut")->GetText();
-            vector<string> lutv = split(look_up_table_string, " ");
 
+            string look_up_table_string = weak_classifier->FirstChildElement("lut")->GetText();
+            int lutlength = atoi(weak_classifier->FirstChildElement("lutlength")->GetText());
+            vector<string> lutv = split(look_up_table_string, " ");
+            for (int tmp_k = 0; tmp_k < lutlength; tmp_k++)
+            {
+                pWeak->look_up_table[tmp_k] = atoi(lutv[tmp_k+1].c_str());
+            }
             tmp_j++;
         }
         tmp_i++;
     }
-    /*
-    for (int i = 0; i < pCascade->count; i++) 
-    {
-        if ( fread( &(pCascade->stages[i].count) , sizeof(int), 1, pFile) != 1) 
-            goto EXIT_TAG;
-
-        //float tmp;
-
-        if ( fread( &(pCascade->stages[i].threshold), sizeof(int), 1, pFile) != 1)
-            goto EXIT_TAG;
-
-        pCascade->stages[i].weak_classifiers = (MBLBPWeak*)malloc( sizeof(MBLBPWeak) *  pCascade->stages[i].count);
-        memset(pCascade->stages[i].weak_classifiers, 0, sizeof(MBLBPWeak) *  pCascade->stages[i].count);
-
-
-        for(int j = 0; j < pCascade->stages[i].count; j++)
-        {
-            MBLBPWeak * pWeak = pCascade->stages[i].weak_classifiers + j;
-
-            if (fread(&(pWeak->x), sizeof(int), 1, pFile) != 1) 
-                goto EXIT_TAG;
-            if (fread(&(pWeak->y), sizeof(int), 1, pFile) != 1) 
-                goto EXIT_TAG;
-            if (fread(&(pWeak->cellwidth), sizeof(int), 1, pFile) != 1) 
-                goto EXIT_TAG;
-            if (fread(&(pWeak->cellheight), sizeof(int), 1, pFile) != 1) 
-                goto EXIT_TAG;
-            if (fread(&(pWeak->soft_threshold), sizeof(int), 1, pFile) != 1) 
-                goto EXIT_TAG;
-
-            //for(int k = 0; k < MBLBP_LUTLENGTH; k++) {
-            if (fread(pWeak->look_up_table, sizeof(int)*MBLBP_LUTLENGTH, 1, pFile) != 1) 
-                    goto EXIT_TAG;
-            //}
-        }
-    }
-    */
     fclose(pFile);
     return pCascade;
-
-EXIT_TAG:
-
-    fclose(pFile);
-    ReleaseMBLBPCascade((void **)(&pCascade));
-    return NULL;
 }
 
 void ReleaseMBLBPCascade(void **ppCascade)
@@ -438,7 +399,7 @@ inline int DetectAt(MBLBPCascade *pCascade, int offset)
         else
             confidence = stage_sum - pCascade->stages[i].threshold + 1; //when stage_sum==threshold, confidence should be > 0; to avoid confusing with return -i(i==0)
     }
-
+    cout <<"confidence"<<confidence<<endl;
     return confidence;
 }
 
@@ -487,7 +448,6 @@ void MBLBPDetectSingleScale(unsigned char *pimg, int width, int height, int step
     // the face rect is out of the image range caused by the round error
     ymax = height - pCascade->win_height - 1;
     xmax = width - pCascade->win_width - 1;
-
 #ifdef _OPENMP
     omp_init_lock(&lock);
 #pragma omp parallel for

@@ -77,26 +77,28 @@ int * MBLBPDetectMultiScale_Multiview( unsigned char * pImg, int width, int heig
             return NULL;
         }
     }
-    //check window size in the classifiers
-    classifier_win_size = ppCascades[0]->win_width;
-    for(int i=1; i < classifier_num; i++)
-    {
-        if( ppCascades[i]->win_width != classifier_win_size)
-        {
-            fprintf( stderr, "%s: The window size in the classifiers must be the same", __FUNCTION__);
-            return NULL;
-        }
-    }
 
+    //check window size in the classifiers
+        cout<<"Starting Test 1:"<<endl;
+        cout<<ppCascades[0]->win_width<<endl;
+        classifier_win_size = ppCascades[0]->win_width;
+        for(int i=1; i < classifier_num; i++)
+        {
+            cout<<"Starting Test 2:"<<ppCascades[i]->win_width<<endl;
+            if( ppCascades[i]->win_width != classifier_win_size)
+            {
+                fprintf( stderr, "%s: The window size in the classifiers must be the same", __FUNCTION__);
+                return NULL;
+            }
+        }
+    
     min_size  = MAX(classifier_win_size,  min_size);
 	if(max_size <=0 )
 		max_size = MIN(width, height);
 	if(max_size < min_size)
 		return NULL;
-
     //clear memory
     memset(&g_faceRects, 0 , sizeof(g_faceRects));
-
     factor1024x = ((min_size<<10)+(classifier_win_size/2)) / classifier_win_size;
 	factor1024x_max = (max_size<<10) / classifier_win_size; //do not round it, to avoid the scan window be out of range
 

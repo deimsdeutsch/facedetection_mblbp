@@ -8,7 +8,7 @@ CXX = g++
 objects = common.o image-resize.o mblbp-detect.o mblbp-detect-mview.o tinyxml2.o main.o
 
 main : $(objects)
-	$(CXX) -std=c++11 -o main $(objects)
+	$(CXX) -Wall -std=c++11 -o main $(objects)
 
 main.o : mblbp-internal.h mblbp-detect-mview.h
 common.o : common.h
@@ -21,7 +21,11 @@ mblbp-detect-mview.o : mblbp-internal.h mblbp-detect-mview.h
 .PHONY: clean help
 clean:
 	rm *.o
+	rm main
 	@echo Cleaned!
 
 help:
-	@echo Make Tools for Face Detection Program
+	@echo ===============================================
+	@echo = Make Tools for Face Detection Program V1.0  =
+	@echo = Author Xiaozhe Yaoi xiaozhe.yaoi@gmail.com  =
+	@echo ===============================================
