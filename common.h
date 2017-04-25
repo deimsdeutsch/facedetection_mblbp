@@ -1,6 +1,6 @@
 ﻿/*************************************************
 * Copyright (c) 2017 Xiaozhe Yao
-* xiaozhe.yao@gmail.com
+* xiaozhe.yaoi@gmail.com
 **************************************************/
 
 #include <vector>

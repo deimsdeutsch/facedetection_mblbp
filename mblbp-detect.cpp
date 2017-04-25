@@ -165,9 +165,7 @@ void GroupRects(FaceRects *pFaces, FaceRectsBuf *pFacesBuf, int min_neighbors)
             pFaces->faces[c].neighbors = (short)(pFacesBuf->faces[i].neighbors);
             pFaces->faces[c].angle = (short)(pFacesBuf->faces[i].angle);
             pFaces->count++;
-
-            cout<<"pfaces.x:"<<pFaces->faces[c].x<<endl;
-
+            cout<<"Face Num Detected: "<<pFaces->count<<endl;
         }
     }
 }
@@ -204,7 +202,6 @@ void *LoadMBLBPCascade(const char *filename)
     {
         pCascade->stages[tmp_i].count = atoi(stage->FirstChildElement("maxWeakCount")->GetText());
         pCascade->stages[tmp_i].threshold = atoi(stage->FirstChildElement("stageThreshold")->GetText());
-        cout<<"Threshold: "<< pCascade->stages[tmp_i].threshold << endl;
         pCascade->stages[tmp_i].weak_classifiers = (MBLBPWeak *)malloc(sizeof(MBLBPWeak) * pCascade->stages[tmp_i].count);
         memset(pCascade->stages[tmp_i].weak_classifiers, 0, sizeof(MBLBPWeak) * pCascade->stages[tmp_i].count);
         int tmp_j = 0;
@@ -399,7 +396,6 @@ inline int DetectAt(MBLBPCascade *pCascade, int offset)
         else
             confidence = stage_sum - pCascade->stages[i].threshold + 1; //when stage_sum==threshold, confidence should be > 0; to avoid confusing with return -i(i==0)
     }
-    cout <<"confidence"<<confidence<<endl;
     return confidence;
 }
 
