@@ -26,8 +26,9 @@ int main(int argc, char *argv[])
     pCascade = (void **)LoadMBLBPCascade("./assets/mblbpclassifier/cascade1.xml");
 
     cout <<"Convert from void ** to MBLBP"<<endl;
-    MBLBPCascade ** ppCascades = (MBLBPCascade**)pCascade;
-    cout << ppCascades[0]->win_width<<endl;
+    MBLBPCascade ** ppCascades;
+    ppCascades[0] = (MBLBPCascade**)pCascade;
+    cout << ppCascades[0]->count<<endl;
     cout <<"Finished Converting"<<endl;
 
     cout<<"Start Detection"<<endl;

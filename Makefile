@@ -18,11 +18,15 @@ mblbp-detect.o : mblbp-detect.h mblbp-internal.h tinyxml2.h
 mblbp-detect-mview.o : mblbp-internal.h mblbp-detect-mview.h 
 
 
-.PHONY: clean help
+.PHONY: clean help rebuild
 clean:
 	rm *.o
 	rm main
 	@echo Cleaned!
+
+rebuild:
+	make clean
+	make
 
 help:
 	@echo ===============================================
