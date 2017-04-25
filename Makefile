@@ -8,7 +8,7 @@ CXX = g++
 objects = common.o image-resize.o mblbp-detect.o mblbp-detect-mview.o tinyxml2.o main.o
 
 main : $(objects)
-	$(CXX) -o main $(objects)
+	$(CXX) -std=c++11 -o main $(objects)
 
 main.o : mblbp-internal.h mblbp-detect-mview.h
 common.o : common.h
