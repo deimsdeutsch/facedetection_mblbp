@@ -18,5 +18,4 @@ The Training Process has been intergrated into OpenCV Library.
 #### Detection
 
 
-
 ### Comparasion
