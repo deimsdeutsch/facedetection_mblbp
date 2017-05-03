@@ -165,7 +165,10 @@ void GroupRects(FaceRects *pFaces, FaceRectsBuf *pFacesBuf, int min_neighbors)
             pFaces->faces[c].neighbors = (short)(pFacesBuf->faces[i].neighbors);
             pFaces->faces[c].angle = (short)(pFacesBuf->faces[i].angle);
             pFaces->count++;
-            cout<<"Face Num Detected: "<<pFaces->count<<endl;
+            cout<<"Face Count"<<pFaces->count<<endl;
+            cout<<"Face X"<<pFaces->faces[c].x<<endl;
+            cout<<"Face Width"<<pFaces->faces[c].width<<endl;
+            cout<<"Face Num Detected:  "<<pFaces->count<<endl;
         }
     }
 }

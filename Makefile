@@ -1,6 +1,6 @@
 ##################################################
 # Copyright (c) 2017 Xiaozhe Yao                 # 
-# xiaozhe.yao@gmail.com                          #
+# xiaozhe.yaoi@gmail.com                          #
 ##################################################/
 
 CXX = g++
@@ -30,6 +30,6 @@ rebuild:
 
 help:
 	@echo ===============================================
-	@echo = Make Tools for Face Detection Program V1.0  =
-	@echo = Author Xiaozhe Yaoi xiaozhe.yaoi@gmail.com  =
+	@echo   Make Tools for Face Detection Program V1.0  
+	@echo   Author Xiaozhe Yaoi xiaozhe.yaoi@gmail.com  
 	@echo ===============================================

@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string.h>
 #include <stdlib.h>
+#include <ctime>
 #include "mblbp-internal.h"
 #include "mblbp-detect-mview.h"
 
@@ -25,17 +26,17 @@ int main(int argc, char *argv[])
         return 0;
     }
     int min_neighbors = 2;
-    int min_size = 200;
-	int max_size = 400;
+    int min_size = 20;
+	int max_size = 200;
     int img_width = 1280;
     int img_height = 960;
     void **pCascades;
     void *pCascade_1;
-    int angles_array[5] = {0};
+    int angles_array[24] = {0,1,2,3,4,5,6,7,8,9,10,11,12,14,15,16,17,18,19,20,21,22,23};
     int *angles=angles_array;
-    int  step = 2;
+    int  step = 10;
     string pImg = "./assets/face_detection.jpg";
-    const char * classifier_file = "./assets/mblbpclassifier/cascade4.xml";
+    const char * classifier_file = "./assets/cascade10.xml";
     for(int i=1; i<argc;i++)
     {
         bool set = false;
@@ -74,7 +75,10 @@ int main(int argc, char *argv[])
     void * cascades_array[1]={pCascade_1};
     pCascades = cascades_array;
     MBLBPCascade ** ppCascades = (MBLBPCascade**)pCascades;
-    int * result = MBLBPDetectMultiScale_Multiview((unsigned char*)pImg.c_str(), img_width, img_height, step, pCascades, angles, 1, 1126, min_neighbors, min_size, max_size);
+    time_t startTime = 0,endTime = 0;
+    time(&startTime);
+    int * result = MBLBPDetectMultiScale_Multiview((unsigned char*)pImg.c_str(), img_width, img_height, step, pCascades, angles, 1,1126, min_neighbors, min_size, max_size);
+    time(&endTime);
     cout<<*result<<endl;
     return 0;
 }
