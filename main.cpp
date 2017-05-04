@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
         cout << "  -imgHeight <image height>" << endl;
         return 0;
     }
-    int min_neighbors = 2;
+    int min_neighbors = 5;
     int min_size = 20;
 	int max_size = 200;
     int img_width = 1280;

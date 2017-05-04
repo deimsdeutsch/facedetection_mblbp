@@ -197,12 +197,15 @@ void *LoadMBLBPCascade(const char *filename)
     cout << "pCascade Win Width : " << pCascade->win_width << endl;
     cout << "pCascade Win Height : " << pCascade->win_height << endl;
     cout << "pCascade Count : " << pCascade->count << endl;
+
     pCascade->stages = (MBLBPStage *)malloc(sizeof(MBLBPStage) * pCascade->count);
     memset(pCascade->stages, 0, sizeof(MBLBPStage) * pCascade->count);
+    
     tinyxml2::XMLElement *root = doc.FirstChildElement("opencv_storage")->FirstChildElement("cascade")->FirstChildElement("stages");
     int tmp_i = 0;
     for (tinyxml2::XMLElement *stage = root->FirstChildElement("_"); stage != NULL; stage = stage->NextSiblingElement("_"))
     {
+        // Every Stage
         pCascade->stages[tmp_i].count = atoi(stage->FirstChildElement("maxWeakCount")->GetText());
         pCascade->stages[tmp_i].threshold = atoi(stage->FirstChildElement("stageThreshold")->GetText());
         pCascade->stages[tmp_i].weak_classifiers = (MBLBPWeak *)malloc(sizeof(MBLBPWeak) * pCascade->stages[tmp_i].count);
@@ -210,6 +213,7 @@ void *LoadMBLBPCascade(const char *filename)
         int tmp_j = 0;
         for (tinyxml2::XMLElement *weak_classifier = stage->FirstChildElement("weakClassifiers")->FirstChildElement("_"); weak_classifier != NULL;weak_classifier = weak_classifier->NextSiblingElement("_"))
         {
+            // Every Weak Classifier
             MBLBPWeak *pWeak = pCascade->stages[tmp_i].weak_classifiers + tmp_j;
             string s = weak_classifier->FirstChildElement("rect")->GetText();
             vector<string> v = split(s, " ");
@@ -224,6 +228,7 @@ void *LoadMBLBPCascade(const char *filename)
             vector<string> lutv = split(look_up_table_string, " ");
             for (int tmp_k = 0; tmp_k < lutlength; tmp_k++)
             {
+                // Loop LUT 
                 pWeak->look_up_table[tmp_k] = atoi(lutv[tmp_k+1].c_str());
             }
             tmp_j++;
