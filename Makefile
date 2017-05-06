@@ -1,6 +1,6 @@
 ##################################################
 # Copyright (c) 2017 Xiaozhe Yao                 # 
-# xiaozhe.yaoi@gmail.com                          #
+# xiaozhe.yaoi@gmail.com                         #
 ##################################################/
 
 CXX = clang++
@@ -8,7 +8,7 @@ CXX = clang++
 objects = common.o image-resize.o mblbp-detect.o mblbp-detect-mview.o tinyxml2.o main.o
 
 main : $(objects)
-	$(CXX) -Wall -std=c++11 -o main $(objects)
+	$(CXX) -Wall -ljpeg -std=c++11 -o main $(objects)
 
 main.o : mblbp-internal.h mblbp-detect-mview.h
 common.o : common.h
