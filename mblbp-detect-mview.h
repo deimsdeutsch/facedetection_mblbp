@@ -1,9 +1,4 @@
-﻿/*************************************************
-* Copyright (c) 2017 Xiaozhe Yao
-* xiaozhe.yaoi@gmail.com
-**************************************************/
-
-#ifndef __MBLBP_DETECT_MVIEW__
+﻿#ifndef __MBLBP_DETECT_MVIEW__
 #define __MBLBP_DETECT_MVIEW__
 
 #include "mblbp-detect.h"

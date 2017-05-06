@@ -1,8 +1,3 @@
-/*************************************************
-* Copyright (c) 2017 Xiaozhe Yao
-* xiaozhe.yao@gmail.com
-**************************************************/
-
 #include "mblbp-detect-mview.h"
 #include "mblbp-internal.h"
 #include <stdio.h>
@@ -122,13 +117,10 @@ int * MBLBPDetectMultiScale_Multiview( unsigned char * pImg, int width, int heig
         for(int i = 0; i < classifier_num; i++)
         {
             MBLBPDetectSingleScale( psmall,     dwidth, dheight, dstep, ppCascades[i], winStride, factor1024x, angles[i], false);
-            // TODO: This flip function causes Segmentation Fault
-            /*
             if( flips[i] )
             {
                 MBLBPDetectSingleScale( psmallflip, dwidth, dheight, dstep, ppCascades[i], winStride, factor1024x, -angles[i], true);
             }
-            */
         }
         free(psmall);
         free(psmallflip);

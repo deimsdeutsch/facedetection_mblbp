@@ -3,7 +3,7 @@
 # xiaozhe.yaoi@gmail.com                          #
 ##################################################/
 
-CXX = g++
+CXX = clang++
 
 objects = common.o image-resize.o mblbp-detect.o mblbp-detect-mview.o tinyxml2.o main.o
 

@@ -1,8 +1,3 @@
-/*************************************************
-* Copyright (c) 2017 Xiaozhe Yao
-* xiaozhe.yao@gmail.com
-**************************************************/
-
 #ifndef __INTERNAL_H__
 #define __INTERNAL_H__
 

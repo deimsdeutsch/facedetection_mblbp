@@ -1,8 +1,3 @@
-/*************************************************
-* Copyright (c) 2017 Xiaozhe Yao
-* xiaozhe.yaoi@gmail.com
-**************************************************/
-
 #include "mblbp-detect.h"
 #include "mblbp-internal.h"
 #include "tinyxml2.h"
@@ -165,7 +160,6 @@ void GroupRects(FaceRects *pFaces, FaceRectsBuf *pFacesBuf, int min_neighbors)
             pFaces->faces[c].neighbors = (short)(pFacesBuf->faces[i].neighbors);
             pFaces->faces[c].angle = (short)(pFacesBuf->faces[i].angle);
             pFaces->count++;
-            cout<<"Face Count"<<pFaces->count<<endl;
             cout<<"Face X"<<pFaces->faces[c].x<<endl;
             cout<<"Face Width"<<pFaces->faces[c].width<<endl;
             cout<<"Face Num Detected:  "<<pFaces->count<<endl;
@@ -177,14 +171,6 @@ void *LoadMBLBPCascade(const char *filename)
 {
     tinyxml2::XMLDocument doc;
     doc.LoadFile(filename);
-    FILE *pFile = fopen(filename, "rb");
-
-    if (pFile == NULL)
-    {
-        fprintf(stderr, "Can not load detector from file %s\n", filename);
-        return NULL;
-    }
-
     MBLBPCascade *pCascade = (MBLBPCascade *)malloc(sizeof(MBLBPCascade));
     memset(pCascade, 0, sizeof(MBLBPCascade));
 
@@ -192,12 +178,7 @@ void *LoadMBLBPCascade(const char *filename)
     pCascade->win_width = atoi(doc.FirstChildElement("opencv_storage")->FirstChildElement("cascade")->FirstChildElement("width")->GetText());
     pCascade->win_height = atoi(doc.FirstChildElement("opencv_storage")->FirstChildElement("cascade")->FirstChildElement("height")->GetText());
     pCascade->count = atoi(doc.FirstChildElement("opencv_storage")->FirstChildElement("cascade")->FirstChildElement("stageNum")->GetText());
-    cout << "Version : " << version << endl;
-    cout << "PARAMETERS : " << endl;
-    cout << "pCascade Win Width : " << pCascade->win_width << endl;
-    cout << "pCascade Win Height : " << pCascade->win_height << endl;
-    cout << "pCascade Count : " << pCascade->count << endl;
-
+    cout << "  -cascade version: " << version << endl;
     pCascade->stages = (MBLBPStage *)malloc(sizeof(MBLBPStage) * pCascade->count);
     memset(pCascade->stages, 0, sizeof(MBLBPStage) * pCascade->count);
     
@@ -235,7 +216,6 @@ void *LoadMBLBPCascade(const char *filename)
         }
         tmp_i++;
     }
-    fclose(pFile);
     return pCascade;
 }
 

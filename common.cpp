@@ -1,9 +1,4 @@
-﻿/*************************************************
-* Copyright (c) 2017 Xiaozhe Yao
-* xiaozhe.yaoi@gmail.com
-**************************************************/
-
-#include <vector>
+﻿#include <vector>
 #include <string>
 #include <iostream>
 #include "common.h"
@@ -50,4 +45,9 @@ vector<string> split(const string &s, const string &seperator)
     }
   }
   return result;
+}
+
+unsigned char* read_img(const char * fimg, int width, int height)
+{
+  
 }

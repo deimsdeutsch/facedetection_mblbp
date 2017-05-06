@@ -1,9 +1,4 @@
-﻿/*************************************************
-* Copyright (c) 2017 Xiaozhe Yao
-* xiaozhe.yao@gmail.com
-**************************************************/
-
-#ifndef __MBLBP_DETECT__
+﻿#ifndef __MBLBP_DETECT__
 #define __MBLBP_DETECT__
 
 
