@@ -4,7 +4,9 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include "lib/jpeg/jpeglib.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <jpeglib.h>
 using namespace std;
 
 vector<string> split(const std::string &s, const std::string &seperator);
