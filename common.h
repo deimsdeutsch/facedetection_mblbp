@@ -11,6 +11,7 @@ using namespace std;
 
 vector<string> split(const std::string &s, const std::string &seperator);
 
-void read_img(char *filename, unsigned char **data, int *width, int *height);
+void read_jpg(char *filename, unsigned char **data, int *width, int *height);
+void read_bmp(char *filename, unsigned char **data, int *width, int *height);
 
 #endif

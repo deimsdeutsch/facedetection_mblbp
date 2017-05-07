@@ -2,7 +2,6 @@
 #include <string>
 #include <iostream>
 #include "common.h"
-#include "lib/jpeg/jpeglib.h"
 
 using namespace std;
 
@@ -49,8 +48,9 @@ vector<string> split(const string &s, const string &seperator)
   return result;
 }
 
-void read_img(char *filename, unsigned char **data, int *width, int *height){
- FILE * infile = fopen(filename, "rb");
+void read_jpg(char *filename, unsigned char **data, int *width, int *height)
+{
+    FILE * infile = fopen(filename, "rb");
     struct jpeg_decompress_struct cinfo;
     struct jpeg_error_mgr jerr;
     cinfo.err = jpeg_std_error(&jerr);
@@ -71,3 +71,31 @@ void read_img(char *filename, unsigned char **data, int *width, int *height){
     jpeg_finish_decompress(&cinfo);
     jpeg_destroy_decompress(&cinfo);
 }
+
+void read_bmp(char *filename, unsigned char **data, int *width, int *height)
+{
+    int i;
+    FILE* f = fopen(filename, "rb");
+    unsigned char info[54];
+    fread(info, sizeof(unsigned char), 54, f); // read the 54-byte header
+
+    // extract image height and width from header
+    int origin_width = *(int*)&info[18];
+    int origin_height = *(int*)&info[22];
+
+    int size = 3 * origin_width * origin_height;
+    unsigned char* origin_data = new unsigned char[size]; // allocate 3 bytes per pixel
+    fread(origin_data, sizeof(unsigned char), size, f); // read the rest of the data at once
+    fclose(f);
+
+    for(i = 0; i < size; i += 3)
+    {
+            unsigned char tmp = origin_data[i];
+            origin_data[i] = origin_data[i+2];
+            origin_data[i+2] = tmp;
+    }
+    *width = origin_width;
+    *height = origin_height;
+    *data= origin_data;
+}
+

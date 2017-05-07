@@ -8,7 +8,7 @@ CXX = clang++
 objects = common.o image-resize.o mblbp-detect.o mblbp-detect-mview.o tinyxml2.o main.o
 
 main : $(objects)
-	$(CXX) -Wall -ljpeg -std=c++11 -o main $(objects)
+	$(CXX) -Wall -ljpeg -ggdb `pkg-config opencv --cflags --libs` -std=c++11 -o main $(objects)
 
 main.o : mblbp-internal.h mblbp-detect-mview.h
 common.o : common.h
