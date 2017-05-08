@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
     }
     unsigned char * image_pointer;
     // Read Image
-    //read_bmp(pImg,&image_pointer,&img_width,&img_height);
+    // read_bmp(pImg,&image_pointer,&img_width,&img_height);
     Mat src;
     src = imread(pImg,CV_LOAD_IMAGE_GRAYSCALE);
     if(!src.data){
@@ -73,20 +73,7 @@ int main(int argc, char *argv[])
     img_width = src.size().width;
     img_height = src.size().height;
     image_pointer = (unsigned char *)src.data;
-
-    for(int i=0;i<100;i++){
-        cout<<*(image_pointer+i)<<" ";
-    }
-
     // Print Parameters
-    cout << "Parameters:"  << endl;
-    cout << "  -img: " <<pImg<< endl;
-    cout << "  -classifier: "<<classifier_file << endl;
-    cout << "  -minNeighbors: " <<min_neighbors<< endl;
-    cout << "  -minSize: "<<min_size<< endl;
-    cout << "  -maxSize: " << max_size<<endl;
-    cout << "  -imgWidth: "<<img_width<< endl;
-    cout << "  -imgHeight: " << img_height<<endl;
 
     pCascade_1 = LoadMBLBPCascade(classifier_file);
     void * cascades_array[1]={pCascade_1};

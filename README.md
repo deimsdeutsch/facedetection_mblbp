@@ -7,7 +7,7 @@ Local Binary Pattern
 
 ### MBLBP
 
-MBLBP (Multi Block Local Binary Pattern) 
+MBLBP (Multi Block Local Binary Pattern)
 
 ### Procedure
 
