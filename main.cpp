@@ -20,8 +20,6 @@ int main(int argc, char *argv[])
         cout << "  -minNeighbors <minimum neighbors>" << endl;
         cout << "  -minSize <minimum size>" << endl;
         cout << "  -maxSize <maximum size>" << endl;
-        cout << "  -imgWidth <image width>" << endl;
-        cout << "  -imgHeight <image height>" << endl;
         return 0;
     }
     int min_neighbors = 5;
@@ -36,10 +34,9 @@ int main(int argc, char *argv[])
     int  step = 10;
     char * pImg;
     
-    const char * classifier_file = "./assets/cascade10.xml";
+    char * classifier_file = "./assets/cascade10.xml";
     for(int i=1; i<argc;i++)
     {
-        bool set = false;
         if( !strcmp( argv[i], "-img" ) )
         {
             pImg = argv[++i];
@@ -80,10 +77,11 @@ int main(int argc, char *argv[])
     bool flips[1]= {true};
     bool * flips_ptr=flips;
     pCascades = cascades_array;
-    time_t startTime = 0,endTime = 0;
-    time(&startTime);
+    double t = (double)cvGetTickCount();
+    t = (double)cvGetTickCount();
     int * result = MBLBPDetectMultiScale_Multiview(image_pointer, img_width, img_height, img_width, pCascades, angles, 1,1126, min_neighbors, min_size, max_size,flips_ptr);
-    time(&endTime);
+    t = (double)cvGetTickCount() - t;
     cout<<*result<<endl;
+    cout<<"detected in "<<(t/((double)cvGetTickFrequency()*1000.))<<"ms"<<endl;
     return 0;
 }

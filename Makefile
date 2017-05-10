@@ -33,3 +33,5 @@ help:
 	@echo   Make Tools for Face Detection Program V1.0  
 	@echo   Author Xiaozhe Yaoi xiaozhe.yaoi@gmail.com  
 	@echo ===============================================
+ocv:
+	$(CXX) -Wall -ljpeg -ggdb `pkg-config opencv --cflags --libs` -std=c++11 -o ocv_detect ocv_detect.cpp

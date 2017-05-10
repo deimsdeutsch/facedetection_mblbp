@@ -160,6 +160,10 @@ void GroupRects(FaceRects *pFaces, FaceRectsBuf *pFacesBuf, int min_neighbors)
             pFaces->faces[c].neighbors = (short)(pFacesBuf->faces[i].neighbors);
             pFaces->faces[c].angle = (short)(pFacesBuf->faces[i].angle);
             pFaces->count++;
+            cout<<pFaces->faces[c].x<<" ";
+            cout<<pFaces->faces[c].y<<" ";
+            cout<<pFaces->faces[c].width<<" ";
+            cout<<pFaces->faces[c].height<<" ";
         }
     }
 }
@@ -177,7 +181,7 @@ void *LoadMBLBPCascade(const char *filename)
     pCascade->count = atoi(doc.FirstChildElement("opencv_storage")->FirstChildElement("cascade")->FirstChildElement("stageNum")->GetText());
     pCascade->stages = (MBLBPStage *)malloc(sizeof(MBLBPStage) * pCascade->count);
     memset(pCascade->stages, 0, sizeof(MBLBPStage) * pCascade->count);
-    
+
     tinyxml2::XMLElement *root = doc.FirstChildElement("opencv_storage")->FirstChildElement("cascade")->FirstChildElement("stages");
     int tmp_i = 0;
     for (tinyxml2::XMLElement *stage = root->FirstChildElement("_"); stage != NULL; stage = stage->NextSiblingElement("_"))
